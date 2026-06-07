@@ -7,6 +7,7 @@ import zoneinfo
 
 @dataclass
 class appointment:
+    confirmation_number:int 
     alias:str
     phone_number:str
     email:str
@@ -15,7 +16,7 @@ class appointment:
     assistance_required:bool
     add_to_communications:bool
     additional_questions:str
-
+    duplicate:bool
     def __post_init__(self):
         if self.additional_questions is None:
             self.additional_questions = ""
@@ -47,7 +48,7 @@ def prepare_data(submissions:list[dict])->list[appointment]:
     for submission in submissions:
         if "answer" not in submission["10"]:
             submission["10"]["answer"] = ""
-        app=appointment(submission["3"]["prettyFormat"],submission["4"]["answer"],submission["5"]["prettyFormat"],parse_and_localize(submission["6"]["answer"]["date"]),submission["7"]["answer"],parse_yes_no(submission["8"]["answer"]),parse_yes_no(submission["9"]["answer"]),submission["10"]["answer"])
+        app=appointment(0,submission["3"]["prettyFormat"],submission["4"]["answer"],submission["5"]["prettyFormat"],parse_and_localize(submission["6"]["answer"]["date"]),submission["7"]["answer"],parse_yes_no(submission["8"]["answer"]),parse_yes_no(submission["9"]["answer"]),submission["10"]["answer"],False)
         appointments.append(app)
     return appointments
 
