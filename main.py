@@ -2,6 +2,7 @@ from jotform_connection import *
 import dataclasses
 import itertools
 from tabulate import tabulate
+from dmc_connection import *
 
 def print_table(apps):
     headers = [f.name for f in dataclasses.fields(apps[0])]
@@ -9,7 +10,7 @@ def print_table(apps):
     print(tabulate(rows, headers=headers, tablefmt="simple"))
     return
 
-def deduplicate(appointments:list[appointment]):
+def list_of_duplicates(appointments:list[appointment]):
     to_be_removed:list[appointment] = list()
     for a, b in itertools.combinations(appointments, 2):
         if a.alias == b.alias:
@@ -20,9 +21,9 @@ def deduplicate(appointments:list[appointment]):
                 b.duplicate = True
     return to_be_removed
 
-confirmation_slot=1
-appointments:list[appointment]= prepare_data(get_submissions())
-unique_appointments = [x for x in appointments where x not in deduplicate(appointments)]
-for app in unique_appointments:
-    appointment.confirmation_number = confirmation_slot
-    confirmation_slot +=1
+def main():
+    appointments:list[appointment]= prepare_data(get_submissions())
+    unique_appointments = [x for x in appointments if x not in list_of_duplicates(appointments)]
+    for confirmation_slot, app in enumerate(unique_appointments, start=1):
+        app.confirmation_number = confirmation_slot
+    sendConfirmation(unique_appointments)
