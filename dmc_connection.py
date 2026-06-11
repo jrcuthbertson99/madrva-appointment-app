@@ -1,12 +1,13 @@
 import dialmycalls_client
 from dialmycalls_client.rest import ApiException
 from jotform_connection import appointment
-
-dialmycalls_client.configuration.api_key['X-Auth-ApiKey'] = ''
-api = dialmycalls_client.TextsApi()
-
+import os
+from dotenv import load_dotenv, dotenv_values 
 
 def sendConfirmation(confirmed:list[appointment]):
+    load_dotenv() 
+    dialmycalls_client.configuration.api_key['X-Auth-ApiKey'] = os.environ['DIAL_MY_CALLS_API_KEY']
+    api = dialmycalls_client.TextsApi()
     kw_id=dialmycalls_client.KeywordsApi().get_keywords()[0].id
     for app in confirmed:
         confirmation_message:str = f'Your appointment for {app.time} has been confirmed. Your confirmation number is {app.confirmation_number}'

@@ -4,6 +4,8 @@ from datetime import datetime
 from dataclasses import dataclass
 import zoneinfo
 
+import os
+from dotenv import load_dotenv, dotenv_values 
 
 @dataclass
 class appointment:
@@ -22,14 +24,15 @@ class appointment:
             self.additional_questions = ""
 
 def get_submissions()->Any:
-     jotformAPIClient = JotformAPIClient('xxx')
-     forms = jotformAPIClient.get_forms(None, 1, None, None)
-     latestForm = forms[0]
-     latestFormID = latestForm["id"]
-     submissions = jotformAPIClient.get_form_submissions(latestFormID)
-     answers = [submission["answers"] for submission in submissions] 
-     answers = [{k: v for k, v in item.items() if k != "1" and k!="2"} for item in answers]
-     return answers
+    load_dotenv()
+    jotformAPIClient = JotformAPIClient(os.environ['JOTFORM_API_KEY'])
+    forms = jotformAPIClient.get_forms(None, 1, None, None)
+    latestForm = forms[0]
+    latestFormID = latestForm["id"]
+    submissions = jotformAPIClient.get_form_submissions(latestFormID)
+    answers = [submission["answers"] for submission in submissions] 
+    answers = [{k: v for k, v in item.items() if k != "1" and k!="2"} for item in answers]
+    return answers
 
 def parse_and_localize(dt_str: str, tz_name: str = "America/New_York") -> datetime:
     dt = datetime.fromisoformat(dt_str)
