@@ -1,4 +1,5 @@
 git+https://github.com/jotform/jotform-api-python.git
 tabulate
 git+https://github.com/dialmycalls/python-sdk-v2.git
-
+python-dotenv
+pytest
