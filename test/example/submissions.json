@@ -20,7 +20,8 @@
         "name": "emailAddress",
         "order": "4",
         "text": "Email Address",
-        "type": "control_email"
+        "type": "control_email",
+        "answer": "john.public@example.com"
       },
       "11": {
         "name": "canWe",
@@ -61,7 +62,7 @@
         "order": "2",
         "text": "Please enter your name and/or alias",
         "type": "control_textbox",
-        "answer": "Kyle A"
+        "answer": "John Public"
       },
       "19": {
         "maxValue": "",
@@ -93,9 +94,9 @@
         "text": "Phone Number",
         "type": "control_phone",
         "answer": {
-          "full": "(757) 407-1298"
+          "full": "(804) 555-0100"
         },
-        "prettyFormat": "(757) 407-1298"
+        "prettyFormat": "(804) 555-0100"
       },
       "33": {
         "cfname": "Random Value Generator",
@@ -125,7 +126,7 @@
         "order": "13",
         "text": "Unique field merge",
         "type": "control_textbox",
-        "answer": "Kyle A(757) 407-1298"
+        "answer": "John Doe(804) 555-0100"
       },
       "44": {
         "name": "date",

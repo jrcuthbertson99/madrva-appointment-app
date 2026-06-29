@@ -69,25 +69,28 @@ def map_appointments(submissions) -> list[Appointment]:
 def to_int(value: str, default: int | None = None) -> int | None:
     try:
         return int(value)
-    except ValueError:
+    except (ValueError, TypeError):
         return default
 
 def to_time(value: str, default: datetime | None = None) -> datetime | None:
     format = "%Y-%m-%d %H:%M"
     try:
         return datetime.strptime(value, format)
-    except (ValueError, TypeError):
+    except (ValueError, TypeError) as e:
         return default
 
 def get_value_by_name(name:str, items: dict[str, str]) -> str | None:
     return next((v for k, v in items.items() if v['name'] == name), {}).get('answer', None)
 
 
-def parse_yes_no(value: str, yes_value: str = "yes", no_value: str="no", default: bool | None = None) -> bool | None:
-    if yes_value.lower() in value.strip().lower():
+def parse_yes_no(value: str, default: bool | None = None) -> bool | None:
+    if value is None:
+        return default
+
+    if "yes" in value.strip().lower():
         return True
 
-    if no_value.lower() in value.strip().lower():
+    if "no" in value.strip().lower():
         return False
 
     return default
