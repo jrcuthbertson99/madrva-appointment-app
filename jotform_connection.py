@@ -1,13 +1,14 @@
 from jotform import JotformAPIClient
-from typing import Any
 from datetime import datetime
 from dataclasses import dataclass
-import zoneinfo
+import json
 
+import os
+from dotenv import load_dotenv
 
 @dataclass
-class appointment:
-    confirmation_number:int 
+class Appointment:
+    confirmation_number:int
     alias:str
     phone_number:str
     email:str
@@ -21,40 +22,84 @@ class appointment:
         if self.additional_questions is None:
             self.additional_questions = ""
 
-def get_submissions()->Any:
-     jotformAPIClient = JotformAPIClient('xxx')
-     forms = jotformAPIClient.get_forms(None, 1, None, None)
-     latestForm = forms[0]
-     latestFormID = latestForm["id"]
-     submissions = jotformAPIClient.get_form_submissions(latestFormID)
-     answers = [submission["answers"] for submission in submissions] 
-     answers = [{k: v for k, v in item.items() if k != "1" and k!="2"} for item in answers]
-     return answers
+    def to_dict(self):
+        return {
+            "confirmation_number": self.confirmation_number,
+            "alias": self.alias,
+            "phone_number": self.phone_number,
+            "email": self.email,
+            "time": self.time.isoformat(),
+            "household_size": self.household_size,
+            "assistance_required": self.assistance_required,
+            "add_to_communications": self.add_to_communications,
+            "additional_questions": self.additional_questions,
+            "duplicate": self.duplicate
+        }
 
-def parse_and_localize(dt_str: str, tz_name: str = "America/New_York") -> datetime:
-    dt = datetime.fromisoformat(dt_str)
-    return dt.replace(tzinfo=zoneinfo.ZoneInfo(tz_name))
+def get_appointments() -> list[Appointment]:
+    form_id = os.getenv('JOTFORM_FORM_ID')
+    client = JotformAPIClient(os.environ['JOTFORM_API_KEY'])
 
-def parse_yes_no(value: str) -> bool:
-    if value.strip().lower() == "yes":
-        return True
-    elif value.strip().lower() == "no":
-        return False
-    else:
-        raise ValueError(f"Expected 'Yes' or 'No', got: {value!r}")
+    submissions = client.get_form_submissions(form_id)
 
-def prepare_data(submissions:list[dict])->list[appointment]:
-    appointments:list[appointment]=list()
-    for submission in submissions:
-        if "answer" not in submission["10"]:
-            submission["10"]["answer"] = ""
-        app=appointment(0,submission["3"]["prettyFormat"],submission["4"]["answer"],submission["5"]["prettyFormat"],parse_and_localize(submission["6"]["answer"]["date"]),submission["7"]["answer"],parse_yes_no(submission["8"]["answer"]),parse_yes_no(submission["9"]["answer"]),submission["10"]["answer"],False)
-        appointments.append(app)
+    return map_appointments(submissions)
+
+def map_appointments(submissions) -> list[Appointment]:
+    appointments = []
+    for s in submissions:
+        answers = s["answers"]
+
+        appt = Appointment(
+            confirmation_number=int(get_value_by_name("uniqueId", answers)),
+            alias=get_value_by_name("pleaseEnter", answers),
+            phone_number=get_value_by_name("phoneNumber", answers)["full"],
+            email=get_value_by_name("emailAddress", answers),
+            time=to_time(get_value_by_name("whatDate13", answers)["date"]),
+            household_size=to_int(get_value_by_name("howMany", answers), default=1),
+            assistance_required=parse_yes_no(get_value_by_name("willYou", answers), default=False),
+            add_to_communications=parse_yes_no(get_value_by_name("canWe", answers), default=False),
+            additional_questions=get_value_by_name("doYou", answers),
+            duplicate=False
+        )
+
+        appointments.append(appt)
+
     return appointments
 
+def to_int(value: str, default: int | None = None) -> int | None:
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return default
+
+def to_time(value: str, default: datetime | None = None) -> datetime | None:
+    format = "%Y-%m-%d %H:%M"
+    try:
+        return datetime.strptime(value, format)
+    except (ValueError, TypeError) as e:
+        return default
+
+def get_value_by_name(name:str, items: dict[str, str]) -> str | None:
+    return next((v for k, v in items.items() if v['name'] == name), {}).get('answer', None)
+
+
+def parse_yes_no(value: str, default: bool | None = None) -> bool | None:
+    if value is None:
+        return default
+
+    if "yes" in value.strip().lower():
+        return True
+
+    if "no" in value.strip().lower():
+        return False
+
+    return default
+
 def main():
-    print(prepare_data(get_submissions()))
+    load_dotenv()
+
+    print(json.dumps([appt.to_dict() for appt in get_appointments()], indent=2))
     return
+
 if __name__ == "__main__":
     main()
-    

@@ -1,0 +1,170 @@
+[
+  {
+    "id": "6579853867913036138",
+    "form_id": "261727530691157",
+    "ip": "149.88.18.197",
+    "created_at": "2026-06-22 20:56:44",
+    "status": "ACTIVE",
+    "new": "1",
+    "flag": "0",
+    "notes": "",
+    "updated_at": null,
+    "answers": {
+      "1": {
+        "name": "heading",
+        "order": "1",
+        "text": "TEST Meadowbridge Community Market Shopping Appointment Form",
+        "type": "control_head"
+      },
+      "5": {
+        "name": "emailAddress",
+        "order": "4",
+        "text": "Email Address",
+        "type": "control_email",
+        "answer": "john.public@example.com"
+      },
+      "11": {
+        "name": "canWe",
+        "order": "9",
+        "text": "Can we add you to our text and email lists so we can send you time-sensitive info about any store hour changes in the future, or other important Meadowbridge Community Market updates? (We will never share your personal information with anyone else!)",
+        "type": "control_radio",
+        "answer": "Not right now"
+      },
+      "13": {
+        "name": "whatDate13",
+        "order": "6",
+        "text": "Which shopping start time works best for you?",
+        "timeFormat": "AM/PM",
+        "type": "control_appointment",
+        "answer": {
+          "date": "2026-06-27 07:00",
+          "duration": "30",
+          "timezone": "America/New_York (GMT-04:00)"
+        },
+        "prettyFormat": "Saturday, Jun 27, 2026 07:00-07:30"
+      },
+      "14": {
+        "name": "submit",
+        "order": "18",
+        "text": "Submit",
+        "type": "control_button"
+      },
+      "15": {
+        "name": "uniqueId",
+        "order": "11",
+        "selectedField": "528c8b464b1a424916000004",
+        "text": "Unique ID",
+        "type": "control_autoincrement",
+        "answer": "0513"
+      },
+      "18": {
+        "name": "pleaseEnter",
+        "order": "2",
+        "text": "Please enter your name and/or alias",
+        "type": "control_textbox",
+        "answer": "John Public"
+      },
+      "19": {
+        "maxValue": "",
+        "name": "howMany",
+        "order": "7",
+        "text": "How many folks are you shopping for this week?",
+        "type": "control_number",
+        "answer": "1"
+      },
+      "24": {
+        "name": "doYou",
+        "order": "10",
+        "text": "Do you have any questions for us?",
+        "type": "control_textarea"
+      },
+      "26": {
+        "name": "input26",
+        "order": "5",
+        "text": "<p><span style=\"text-decoration: underline;\"><strong>Appointment Guidelines:</strong></span></p>\r\n<p>For the sake of our collective safety and the sustainability of our space, we\u00a0have limitations around how many shoppers the store can support at one time \u2013<strong> we ask that\u00a0you arrive a few minutes before or at the time you select below!\u00a0</strong></p>\r\n<p>If you are not present when your shopping appointment begins, you may need to wait to see whether or not it's possible for you to shop during another block of time. If there is no open availability in the other timeslot(s) you will need to make an appointment to shop the following Saturday instead.</p>\r\n<p>You do not need to bring anything with you. If you need assistance shopping, let us know below and a volunteer will help you shop or have you fill out an assisted shop form. Young children who cannot be left unsupervised can shop with you. Any additional people will not be able to shop with you and will be asked to wait outside. Folks who would also like to shop will need to make their own appointment. You can also fill out this form with their info to make a separate appointment for them. They will not be able to shop without their own appointment/ticket.</p>\r\n<p><strong>Please note: Each individual can only sign up for one appointment. If you sign up for multiple appointments, we will select your earliest appointment time and remove the others.</strong></p>\r\n<p>\u00a0</p>",
+        "type": "control_text"
+      },
+      "28": {
+        "countryCode": "No",
+        "inputMask": "enable",
+        "inputMaskValue": "(###) ###-####",
+        "name": "phoneNumber",
+        "order": "3",
+        "sublabels": "{\"country\":\"Country Code\",\"area\":\"Area Code\",\"phone\":\"Phone Number\",\"full\":\"Phone Number\",\"masked\":\"A valid phone number is required. Please enter a 7+ digit phone number, including area code! If you opt in below, we can also send you important store updates via text. \"}",
+        "text": "Phone Number",
+        "type": "control_phone",
+        "answer": {
+          "full": "(804) 555-0100"
+        },
+        "prettyFormat": "(804) 555-0100"
+      },
+      "33": {
+        "cfname": "Random Value Generator",
+        "name": "typeA",
+        "order": "14",
+        "selectedField": "5391b2468f5ea33236000006",
+        "static": "No",
+        "text": "Test Code (Ignore This)",
+        "type": "control_widget"
+      },
+      "34": {
+        "name": "language",
+        "order": "12",
+        "text": "Language",
+        "type": "control_textbox",
+        "answer": "English"
+      },
+      "35": {
+        "name": "willYou",
+        "order": "8",
+        "text": "Will you need a volunteer to assist you with shopping?",
+        "type": "control_radio",
+        "answer": "No"
+      },
+      "43": {
+        "name": "uniqueField",
+        "order": "13",
+        "text": "Unique field merge",
+        "type": "control_textbox",
+        "answer": "John Doe(804) 555-0100"
+      },
+      "44": {
+        "name": "date",
+        "order": "16",
+        "sublabels": "{\"day\":\"Day\",\"month\":\"Month\",\"year\":\"Year\",\"last\":\"Last Name\",\"hour\":\"Hour\",\"minutes\":\"Minutes\",\"litemode\":\"Date\"}",
+        "text": "Date",
+        "timeFormat": "AM/PM",
+        "type": "control_datetime",
+        "answer": {
+          "month": "06",
+          "day": "22",
+          "year": "2026",
+          "datetime": "2026-06-22 00:00:00"
+        },
+        "prettyFormat": "06-22-2026"
+      },
+      "45": {
+        "name": "time",
+        "order": "17",
+        "range": "No",
+        "sublabels": "{\"hour\":\"Hour\",\"minutes\":\"Minutes\",\"hourRange\":\"Hour\",\"minutesRange\":\"Minutes\"}",
+        "text": "Time",
+        "timeFormat": "AM/PM",
+        "type": "control_time",
+        "answer": {
+          "timeInput": "08:55",
+          "hourSelect": "08",
+          "minuteSelect": "55",
+          "ampm": "PM"
+        },
+        "prettyFormat": "08:55 PM"
+      },
+      "46": {
+        "name": "formfull",
+        "order": "15",
+        "text": "<p><span style=\"font-size: 18pt;\"><strong>All appointment slots for shopping at Meadowbridge Community Market on June 13th are filled. This form will open again on June 12th at 9AM for shopping on June 20th.</strong></span></p>",
+        "type": "control_text"
+      }
+    }
+  }
+]
